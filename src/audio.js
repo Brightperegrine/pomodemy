@@ -9,7 +9,8 @@ async function loadBell(url) {
   return audioCtx.decodeAudioData(arrayBuffer)
 }
 
-function playBell(buffer, onEnded) {
+async function playBell(buffer, onEnded) {
+  if (audioCtx.state === 'suspended') await audioCtx.resume()
   const source = audioCtx.createBufferSource()
   source.buffer = buffer
   source.connect(audioCtx.destination)
